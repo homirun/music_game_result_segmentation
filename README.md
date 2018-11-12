@@ -3,6 +3,7 @@
 ## OverView
 機械学習を用いた音ゲーのスコアリザルト画像の分類
 現在は[jubeat, IIDX, SDVX]の分類のみ対応
+./assets/test下の画像を分類し自動的に最適なディレクトリに振り分ける
 
 ## Requirement
 - Python 3.6.6 (TensorFlowが現在3.7に対応していないため)
@@ -12,4 +13,4 @@
 - <a href="http://www.numpy.org/">numpy 1.15.3</a>
 
 ## Road map
-- 画像分類し自動的に最適なディレクトリに振り分ける実装
+- 画像を探しに行くディレクトリをコマンドライン引数で変更できるようにする
