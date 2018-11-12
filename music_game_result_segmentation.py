@@ -1,6 +1,7 @@
 import glob
-import numpy as np
 import os
+import shutil
+import numpy as np
 from PIL import Image
 from keras.utils import np_utils
 from keras.models import Sequential, load_model
@@ -11,6 +12,7 @@ from sklearn.model_selection import train_test_split
 
 def main():
     img_size = 50
+
     dir_names = ["jubeat", "IIDX", "SDVX"]
 
     if os.path.isfile('./music_game_score_model.h5') is False:  # modelが存在していない場合
@@ -29,13 +31,13 @@ def main():
         print('load models')
 
         model = load_model('music_game_score_model.h5')
-        test_files = ['jubeat_test', 'IIDX_test', 'SDVX_test']
+        test_files = ['test']
 
         imgs_test, labels_test, names = parse_imgs(test_files, img_size)
 
         predicts = model.predict(imgs_test)
-        for n, predict in zip(names, predicts):
-            print(n, dir_names[int(np.argmax(predict))])
+
+        move_img(names, dir_names, predicts)
 
 
 def parse_imgs(dir_names, img_size):    # 読み込んだ画像とlabelの変換
@@ -61,6 +63,15 @@ def parse_imgs(dir_names, img_size):    # 読み込んだ画像とlabelの変換
     imgs = imgs.astype('float32') / 255.0
     labels = np_utils.to_categorical(labels, len(dir_names))  # one-hot形式に変換
     return imgs, labels, names
+
+
+def move_img(file_names, dir_names, predicts):
+    for dir_name in dir_names:
+        os.makedirs("./result/"+dir_name, exist_ok=True)
+
+    for n, predict in zip(file_names, predicts):
+        print("moving.... ", n, dir_names[int(np.argmax(predict))])
+        shutil.move(n, "./result/" + dir_names[int(np.argmax(predict))])
 
 
 def create_model(imgs, labels):  # model作成
