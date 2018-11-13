@@ -3,7 +3,7 @@
 ## OverView
 機械学習を用いた音ゲーのスコアリザルト画像の分類
 現在は[jubeat, IIDX, SDVX]の分類のみ対応
-./assets/test下の画像を分類し自動的に最適なディレクトリに振り分ける
+指定されたディレクトリ下(複数可能)画像を分類し自動的に最適なディレクトリに振り分ける
 
 ## Requirement
 - Python 3.6.6 (TensorFlowが現在3.7に対応していないため)
@@ -16,6 +16,6 @@
 
 1. 以下のコマンドを叩く(引数なしの場合は実行ファイルと同じ階層の画像を判定しに行く)
 
-        python music_game_result_segmentation.py ['your_dir_path'] 
+        python music_game_result_segmentation.py [dir_path [dir_path ...]] 
 
 1. 実行ファイルと同じ階層にresultディレクトリが作成され、その下にIIDX,jubeat,SDVXディレクトリが作成、分類される。
