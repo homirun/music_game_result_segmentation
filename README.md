@@ -12,5 +12,10 @@
 - <a href="https://scikit-learn.org/stable/">scikit-learn 0.20.0</a>
 - <a href="http://www.numpy.org/">numpy 1.15.3</a>
 
-## Road map
-- 画像を探しに行くディレクトリをコマンドライン引数で変更できるようにする
+## Usage
+
+1. 以下のコマンドを叩く(引数なしの場合は実行ファイルと同じ階層の画像を判定しに行く)
+
+        python music_game_result_segmentation.py ['your_dir_path'] 
+
+1. 実行ファイルと同じ階層にresultディレクトリが作成され、その下にIIDX,jubeat,SDVXディレクトリが作成、分類される。

@@ -1,6 +1,7 @@
 import glob
 import os
 import shutil
+import argparse
 import numpy as np
 from PIL import Image
 from keras.utils import np_utils
@@ -31,21 +32,29 @@ def main():
         print('load models')
 
         model = load_model('music_game_score_model.h5')
-        test_files = ['test']
+        argument_parser = argparse.ArgumentParser()
+        argument_parser.add_argument('dirs', nargs='*', help='search directories path')
+        args = argument_parser.parse_args()
 
-        imgs_test, labels_test, names = parse_imgs(test_files, img_size)
+        if len(args.dirs) == 0:
+            path = './'
+            test_files = ['']
+        else:
+            print(args.dirs)
+            path = ""
+            test_files = args.dirs
 
+        imgs_test, labels_test, names = parse_imgs(test_files, img_size, path)
         predicts = model.predict(imgs_test)
-
         move_img(names, dir_names, predicts)
 
 
-def parse_imgs(dir_names, img_size):    # 読み込んだ画像とlabelの変換
+def parse_imgs(dir_names, img_size, path):    # 読み込んだ画像とlabelの変換
     imgs = []
     labels = []
     names = []
     for i, name in enumerate(dir_names):
-        path = './assets/' + name
+        path = path + name
         files = glob.glob(path + "/*.JPG")
 
         for file in files:
@@ -56,6 +65,8 @@ def parse_imgs(dir_names, img_size):    # 読み込んだ画像とlabelの変換
             img_data = np.asarray(image)
             imgs.append(img_data)
             labels.append(i)
+
+        path = ""
 
     imgs = np.array(imgs)
     labels = np.array(labels)
