@@ -14,12 +14,12 @@ from sklearn.model_selection import train_test_split
 def main():
     img_size = 50
 
-    dir_names = ["jubeat", "IIDX", "SDVX"]
+    dir_names = ['jubeat', 'IIDX', 'SDVX']
 
     if os.path.isfile('./music_game_score_model.h5') is False:  # modelが存在していない場合
         print('create models')
-
-        imgs, labels, names = parse_imgs(dir_names, img_size)
+        path = './assets'
+        imgs, labels, names = parse_imgs(dir_names, img_size, path)
         imgs_train, imgs_test, labels_train, labels_test = train_test_split(imgs, labels, test_size=0.20)
 
         model = create_model(imgs_train, labels_train)
@@ -41,7 +41,7 @@ def main():
             test_files = ['']
         else:
             print(args.dirs)
-            path = ""
+            path = ''
             test_files = args.dirs
 
         imgs_test, labels_test, names = parse_imgs(test_files, img_size, path)
@@ -55,18 +55,18 @@ def parse_imgs(dir_names, img_size, path):    # 読み込んだ画像とlabelの
     names = []
     for i, name in enumerate(dir_names):
         path = path + name
-        files = glob.glob(path + "/*.JPG")
+        files = glob.glob(path + '/*.JPG')
 
         for file in files:
             names.append(file)
             image = Image.open(file)
-            image = image.convert("RGB")
+            image = image.convert('RGB')
             image = image.resize((img_size, img_size))
             img_data = np.asarray(image)
             imgs.append(img_data)
             labels.append(i)
 
-        path = ""
+        path = ''
 
     imgs = np.array(imgs)
     labels = np.array(labels)
@@ -78,11 +78,11 @@ def parse_imgs(dir_names, img_size, path):    # 読み込んだ画像とlabelの
 
 def move_img(file_names, dir_names, predicts):
     for dir_name in dir_names:
-        os.makedirs("./result/"+dir_name, exist_ok=True)
+        os.makedirs('./result/'+dir_name, exist_ok=True)
 
     for n, predict in zip(file_names, predicts):
-        print("moving.... ", n, dir_names[int(np.argmax(predict))])
-        shutil.move(n, "./result/" + dir_names[int(np.argmax(predict))])
+        print('moving....', n, dir_names[int(np.argmax(predict))])
+        shutil.move(n, './result/' + dir_names[int(np.argmax(predict))])
 
 
 def create_model(imgs, labels):  # model作成
