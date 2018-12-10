@@ -18,9 +18,6 @@
 
         python music_game_result_segmentation.py [dir_path [dir_path ...]] 
         
-現在、拡張子がUppercase (JPG)のみ対応している。
+現在、拡張子が JPG のみ対応している。
 
 1. 実行ファイルと同じ階層にresultディレクトリが作成され、その下にIIDX,jubeat,SDVXディレクトリが作成、分類される。
-
-## Road map
-- Lowercaseなどの拡張子の表記ゆれに対応する。

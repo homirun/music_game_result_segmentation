@@ -55,7 +55,7 @@ def parse_imgs(dir_names, img_size, path):    # 読み込んだ画像とlabelの
     names = []
     for i, name in enumerate(dir_names):
         path = path + name
-        files = glob.glob(path + '/*.JPG')
+        files = glob.glob(path + '/*.[jJ][pP][gG]')
 
         for file in files:
             names.append(file)
